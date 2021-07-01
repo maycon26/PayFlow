@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     ),
     Container(
       color: Colors.green,
-    )
+    ),
   ];
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,9 @@ class _HomePageState extends State<HomePage> {
                   Icons.home_outlined,
                 )),
             GestureDetector(
-              onTap: () {print("cricou");},
+              onTap: () {
+                Navigator.pushNamed(context, "/barcode_scanner");
+              },
               child: Container(
                 width: 56,
                 height: 56,
