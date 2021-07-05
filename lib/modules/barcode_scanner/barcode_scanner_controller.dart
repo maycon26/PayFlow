@@ -6,8 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:payflow/modules/barcode_scanner/barcode_scanner_status.dart';
 
 class BarcodeScannerController{
-  final statusNotifier =
-  ValueNotifier<BarcodeScannerStatus>(BarcodeScannerStatus());
+  final statusNotifier = ValueNotifier<BarcodeScannerStatus>(BarcodeScannerStatus());
   BarcodeScannerStatus get status => statusNotifier.value;
   set status(BarcodeScannerStatus status) => statusNotifier.value = status;
 

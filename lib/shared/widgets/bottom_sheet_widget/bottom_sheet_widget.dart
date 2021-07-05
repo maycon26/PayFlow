@@ -19,8 +19,8 @@ class BottomSheetWidget extends StatelessWidget {
         quarterTurns: 1,
         child: Material(
           child: Container(
-            color: AppColors.shape,
-            height: 124,
+            color: Colors.transparent,
+            //height: 124,
             child: Center(
               child: Column(
                 children: [
