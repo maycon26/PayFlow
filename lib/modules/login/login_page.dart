@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Center(child: Image.asset(AppImages.logomini)),
                   Padding(
-                    padding: const EdgeInsets.only(left: 70 , right: 70, top: 10), //18% de cada lado
+                    padding: const EdgeInsets.only(left: 60 , right: 60, top: 10), //18% de cada lado
                     child: Text(
                       "Organize seus\nboletos em um\nsó lugar",
                       style: AppTextStyles.titleHome,
