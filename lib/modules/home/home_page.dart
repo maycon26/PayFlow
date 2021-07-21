@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:payflow/modules/extract/extract_page.dart';
 import 'package:payflow/modules/home/home_controller.dart';
+import 'package:payflow/modules/meus_boletos/meus_boletos_page.dart';
+import 'package:payflow/shared/models/user_model.dart';
 import 'package:payflow/shared/themes/app_colors.dart';
 import 'package:payflow/shared/themes/app_text_styles.dart';
-import 'package:payflow/shared/widgets/boleto_list/boleto_list_widget.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final UserModel user;
+  const HomePage({Key? key, required this.user}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -14,39 +17,45 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final controller = HomeController();
   final pages = [
-    Container(
-      child: BoletoListWidget()
+    MeusBoletosPage(
+      key: UniqueKey(),
     ),
-    Container(
-      color: Colors.green,
+    ExtractPage(
+      key: UniqueKey(),
     ),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(152),
+        preferredSize: Size.fromHeight(112),
         child: Container(
-          height: 152,
+          height: 112,
           color: AppColors.primary,
           child: Center(
-            child: ListTile(
-              title: Text.rich(
-                TextSpan(
-                  text: "Olá, ",
-                  style: AppTextStyles.titleRegular,
-                  children: [
-                    TextSpan(text: "Maycon", style: AppTextStyles.titleBoldBackground),
-                  ]
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: ListTile(
+                title: Text.rich(
+                  TextSpan(
+                    text: "Olá, ",
+                    style: AppTextStyles.titleRegular,
+                    children: [
+                      TextSpan(text: "${widget.user.name}", style: AppTextStyles.titleBoldBackground),
+                    ]
+                  ),
                 ),
-              ),
-              subtitle: Text("Mantenha suas contas em dia", style: AppTextStyles.captionShape),
-              trailing: Container(
-                height: 48,
-                width: 48,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.black
+                subtitle: Text("Mantenha suas contas em dia", style: AppTextStyles.captionShape),
+                trailing: Container(
+                  height: 48,
+                  width: 48,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.black,
+                    image: DecorationImage(
+                      image: NetworkImage(widget.user.photoURL!)
+                    )
+                  ),
                 ),
               ),
             ),
@@ -54,7 +63,10 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
 
-      body: pages[controller.currentPage],
+      body: [
+        MeusBoletosPage(key: UniqueKey()),
+        ExtractPage(key: UniqueKey())
+      ][controller.currentPage],
 
       bottomNavigationBar: Container(
         height: 90,
@@ -69,10 +81,12 @@ class _HomePageState extends State<HomePage> {
                 },
                 icon: Icon(
                   Icons.home_outlined,
+                  color: controller.currentPage == 0 ? AppColors.primary : AppColors.body,
                 )),
             GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, "/insert_boleto"); //barcode_scanner
+              onTap: () async{
+                await Navigator.pushNamed(context, "/barcode_scanner");
+                setState(() {});
               },
               child: Container(
                 width: 56,
@@ -95,7 +109,7 @@ class _HomePageState extends State<HomePage> {
               },
               icon: Icon(
                 Icons.description_outlined,
-                color: AppColors.primary,
+                color: controller.currentPage == 1 ? AppColors.primary : AppColors.body,
               ),),
           ],
         ),

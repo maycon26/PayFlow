@@ -12,7 +12,7 @@ class AuthController{
     if(user != null){
       saveUser(user);
       _user = user;
-      Navigator.pushReplacementNamed(context, "/home"); //Push: tem como voltar. PushReplacement substitui a página
+      Navigator.pushReplacementNamed(context, "/home", arguments: user); //Push: tem como voltar. PushReplacement substitui a página
     }
     else{
       Navigator.pushReplacementNamed(context, "/login");
