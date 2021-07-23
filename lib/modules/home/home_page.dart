@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:payflow/modules/extract/extract_page.dart';
 import 'package:payflow/modules/home/home_controller.dart';
 import 'package:payflow/modules/meus_boletos/meus_boletos_page.dart';
+import 'package:payflow/shared/auth/auth_controller.dart';
 import 'package:payflow/shared/models/user_model.dart';
 import 'package:payflow/shared/themes/app_colors.dart';
 import 'package:payflow/shared/themes/app_text_styles.dart';
@@ -16,14 +19,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final controller = HomeController();
-  final pages = [
-    MeusBoletosPage(
-      key: UniqueKey(),
-    ),
-    ExtractPage(
-      key: UniqueKey(),
-    ),
-  ];
+
+  // final pages = [
+  //   MeusBoletosPage(
+  //     key: UniqueKey(),
+  //   ),
+  //   ExtractPage(
+  //     key: UniqueKey(),
+  //   ),
+  // ];
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,8 +70,8 @@ class _HomePageState extends State<HomePage> {
       ),
 
       body: [
-        MeusBoletosPage(key: UniqueKey()),
-        ExtractPage(key: UniqueKey())
+        MeusBoletosPage(),
+        ExtractPage()
       ][controller.currentPage],
 
       bottomNavigationBar: Container(
@@ -85,8 +91,14 @@ class _HomePageState extends State<HomePage> {
                 )),
             GestureDetector(
               onTap: () async{
-                await Navigator.pushNamed(context, "/barcode_scanner");
-                setState(() {});
+                Navigator.pushNamed(context, '/barcode_scanner').then((_) {
+                  // This block runs when you have returned back to the 1st Page from 2nd.
+                  setState(() {});
+                });
+                // Navigator.of(context)
+                //     .pushNamed("/barcode_scanner")
+                //     .then((value) => setState(() => {}));
+                //await Navigator.pushNamed(context, "/barcode_scanner");
               },
               child: Container(
                 width: 56,

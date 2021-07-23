@@ -89,7 +89,9 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
                     Navigator.pushReplacementNamed(context, "/insert_boleto");
                   },
                   secondaryLabel: "Adicionar da galeria",
-                  secondaryOnPressed: (){},
+                  secondaryOnPressed: (){
+                    Navigator.pop(context);
+                  },
               ),
             ),
           ),
